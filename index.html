@@ -17,6 +17,8 @@
 
     <main>
         <!--Each Section is a card that is hidden by default (except for starting card)-->
+
+        <!--Starting Card for Quiz-->
         <section id="start-card" class="card">
             <h1 id ="title">JavaScript Coding Quiz!</h1>
             <p>Try to answer the following code-related questions within the time limit.
@@ -24,6 +26,8 @@
             </p>
             <button id="start-btn" class="btn">Start Quiz!</button>
         </section>
+
+        <!--Question Card(s) that will use APIs to modify the HTML content on the card-->
         <section id="question-card" class="card" hidden="true">
             <h2 id="question-text">The condition in an if/else statement is enclosed within ______.</h2>
             <div id="answer-choices">
@@ -32,8 +36,14 @@
                 <button id="choice2" class="btn choice-btn">3. parentheses</button>
                 <button id="choice3" class="btn choice-btn">4. square brackets</button>
             </div>    
-        </section id="result-card">
+        </section>
+
+        <!--Question Result-->
+        <section id="result-card">
             <p id="result-text">Correct!</p>
+        </section>
+
+        <!--Score Card/Final Quiz Result-->
         <section id="score-card" class="card">
             <h2>All Done!</h2>
             <p>
@@ -41,7 +51,12 @@
                 <span id="score">0</span>.
             </p>
             <form id="submittion-form" class="inline-form"></form>
+                <label for="initials">Enter initials: </label>
+                <input type="text" id="initials">
+                <button id="submit-btn" class="btn">Submit</button>
         </section>
+
+        <!--Shows leaderboard with list of highscores-->
         <section id="leaderboard-card" class="card" hidden="true">
             <h2>Highscores</h2>
             <ol id="leaderboard-list"></ol>
