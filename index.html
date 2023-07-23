@@ -8,28 +8,47 @@
 </head>
 <body>
     <header>
-
+        <a id="highscore-link">View Highscores</a>
+        <time>
+             Time: 
+            <span id="time"></span>
+        </time>
     </header>
 
     <main>
-        <section>
-
+        <!--Each Section is a card that is hidden by default (except for starting card)-->
+        <section id="start-card" class="card">
+            <h1 id ="title">JavaScript Coding Quiz!</h1>
+            <p>Try to answer the following code-related questions within the time limit.
+               Keep in mind that incorrect answers will penalize your score/time by ten seconds! 
+            </p>
+            <button id="start-btn" class="btn">Start Quiz!</button>
         </section>
-
-        <section>
-            
+        <section id="question-card" class="card" hidden="true">
+            <h2 id="question-text">The condition in an if/else statement is enclosed within ______.</h2>
+            <div id="answer-choices">
+                <button id="choice0" class="btn choice-btn">1. quotes</button>
+                <button id="choice1" class="btn choice-btn">2. curly brackets</button>
+                <button id="choice2" class="btn choice-btn">3. parentheses</button>
+                <button id="choice3" class="btn choice-btn">4. square brackets</button>
+            </div>    
+        </section id="result-card">
+            <p id="result-text">Correct!</p>
+        <section id="score-card" class="card">
+            <h2>All Done!</h2>
+            <p>
+                Your final is 
+                <span id="score">0</span>.
+            </p>
+            <form id="submittion-form" class="inline-form"></form>
         </section>
-
-        <section>
-            
+        <section id="leaderboard-card" class="card" hidden="true">
+            <h2>Highscores</h2>
+            <ol id="leaderboard-list"></ol>
+            <button id="back-btn" class="btn">Go Back</button>
+            <button id="clear-btn" class="btn">Clear Highscores</button>
         </section>
     </main>
-
-    <footer>
-
-    </footer>
-
 <script rel="stylesheet" href="Assets/js/script.js"></script>  
 </body>
-
 </html>

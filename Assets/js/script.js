@@ -133,25 +133,27 @@ themeSwitcher.addEventListener("click", function() {
 var codeQuestions = [
     {
         question: "JavaScript Question Placeholder",
-        choices: ["choice1", "choice2", "choice3", "choice4"],
-        correctAnswer: 3
+        choices: ["choice0", "choice1", "choice2", "choice3"],
+        correctAnswerIndex: 3
     },
     {
         question: "JavaScript Question Placeholder",
-        choices: ["choice1", "choice2", "choice3", "choice4"],
-        correctAnswer: 3
+        choices: ["choice0", "choice1", "choice2", "choice3"],
+        correctAnswerIndex: 1
     },
     {
         question: "JavaScript Question Placeholder",
-        choices: ["choice1", "choice2", "choice3", "choice4"],
-        correctAnswer: 3
+        choices: ["choice0", "choice1", "choice2", "choice3"],
+        correctAnswerIndex: 2
     },
     {
         question: "JavaScript Question Placeholder",
-        choices: ["choice1", "choice2", "choice3", "choice4"],
-        correctAnswer: 3
+        choices: ["choice0", "choice1", "choice2", "choice3"],
+        correctAnswerIndex: 3
     },
 ];
+
+//Default hide all cards until 
 
 //Set up variable to keep track of the current question index
 //and another variable to store the user's score.
