@@ -153,11 +153,44 @@ var codeQuestions = [
     },
 ];
 
-//Default hide all cards until 
+//Event Listener using "DOMContentLoaded" to trigger showing the start-card and hiding the rest upon loading of the page
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("start-card").hidden = false;
+  document.getElementById("question-card").hidden = true;
+  document.getElementById("result-card").hidden = true;
+  document.getElementById("score-card").hidden = true;
+  document.getElementById("leaderboard-card").hidden = true;
+});
+
+//Event listenter to start the quiz when the 'Start Quiz!' button is pressed
+document.getElementById("start-btn").addEventListener("click", function() {
+  //hide start card
+  document.getElementById("start-card").hidden = true;
+  //show first question card
+  showQuestion();
+});
+
+//defining 'showQuestion' function from above
+function showQuestion() {
+  //get current question for CodeQuestions array
+  var currentQuestion = codeQuestions[currentQuestionIndex];
+  //update question and answer choices 
+  document.getElementById("question-text").textContent = currentQuestion.question;
+  for (var i = 0; i < currentQuestion.choices.length; i++) {
+    document.getElementById("choice" + i).textContent = currentQuestion.choices[i];
+  }
+
+  //show the question card and hide others
+  document.getElementById("question-card").hidden = false;
+  document.getElementById("result-card").hidden = true;
+  document.getElementById("score-card").hidden = true;
+  document.getElementById("leaderboard-card").hidden = true;
+}
+
 
 //Set up variable to keep track of the current question index
 //and another variable to store the user's score.
-var currentQuestion = 0;
+var currentQuestionIndex = 0;
 var userScore = 0;
 
 //Add a function to display the next question when the user
