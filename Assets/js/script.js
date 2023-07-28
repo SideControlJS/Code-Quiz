@@ -1,204 +1,145 @@
-//NOTES & EXAMPLES
-
-//TRAVERSE DOM LESSON
-// Accessing element by id 
-/*var firstChildUl = document.getElementById("first-child-ul");
-console.log(firstChildUl)
-
-// Setting style of element
-firstChildUl.style.color = "green";
-
-
-// Access multiple elements using .querySelectorAll()
- var divTags = document.querySelectorAll("div");
- var pTags = document.querySelectorAll("p");
- var imgEl = document.querySelectorAll("img");
-
-// Access element by ID using .querySelector()
- var changeP = document.querySelector("#change2");
-
-// Sets first pTags to have a font-size of 40px
- pTags[0].setAttribute("style", "font-size: 40px;");
-
-// Sets changeP to have multiple style attributes
- changeP.setAttribute("style", "font-size: 25px; font-weight: bold; text-decoration:underline; ");
-
- // Sets image source of the first image
- imgEl[0].setAttribute("src", "./assets/images/image_1.png");
-
-// Adds size and width styling to image
- imgEl[0].setAttribute("style", "width:50%");
-
-// Loops through divTags to set each one to have the color blue and the font size of 30px
-for (var i = 0; i < divTags.length; i++) {
-  divTags[i].setAttribute("style", "color:blue; font-size: 30px");
- }
-
- // CREATE-APPEND LESSON
- // Stores user response in variable
-var tagName = prompt("Please enter an HTML Tag (ex. h1, h2, p, div):", "enter tag");
-
-if (tagName !== "h1" && tagName !== "h2" && tagName !== "p" && tagName !== "div") {
-  alert("please enter a valid tag");
-} else {
-  // Creates element based on tag entered by user
-  var tag = document.createElement(tagName);
-
-  // Adds text content to created tag
-  tag.textContent = "This was made via prompts. It's a " + tagName + ".";
-  
-  // Appends tag as child of document body
-  document.body.appendChild(tag);
-}
-
-var nextTag = confirm("Would you like to add another tag?");
-
-if (nextTag === true) {
-  var secondTagName = prompt("Please enter another  HTML Tag (ex. h1, h2, p, div):", "enter tag here");
-  if(secondTagName !== "h1" && secondTagName !== "h2" && secondTagName !== "p" && secondTagName !== "div") {
-    alert("please enter a valid tag");
-  } else {
-    var secondTag = document.createElement(secondTagName);
-    secondTag.textContent = "This is our second tag via prompts, it's a " + secondTagName + ".";
-    document.body.appendChild(secondTag);
-  }
-}
-
-
-//TIMERS-INTERVALS LESSON 
-// Selects element by class
-var timeEl = document.querySelector(".time");
-
-// Selects element by id
-var mainEl = document.getElementById("main");
-
-var secondsLeft = 10;
-
-function setTime() {
-  // Sets interval in variable
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft + " seconds left till colorsplosion.";
-
-    if(secondsLeft === 0) {
-      // Stops execution of action at set interval
-      clearInterval(timerInterval);
-      // Calls function to create and append image
-      sendMessage();
-    }
-
-  }, 1000);
-}
-
-// Function to create and append colorsplosion image
-function sendMessage() {
-  timeEl.textContent = " ";
-  var imgEl = document.createElement("img");
-  imgEl.setAttribute("src", "images/image_1.jpg");
-  mainEl.appendChild(imgEl);
-
-}
-
-setTime();
-
-
-//EVENT-LISTENER LESSON
-// Access toggle switch HTML element
-var themeSwitcher = document.querySelector("#theme-switcher");
-var container = document.querySelector(".container");
-
-// Set default mode to dark
-var mode = "dark";
-
-// Listen for a click event on toggle switch
-themeSwitcher.addEventListener("click", function() {
-  // If mode is dark, apply light background
-  if (mode === "dark") {
-    mode = "light";
-    container.setAttribute("class", "light");
-  }
-  // If mode is light, apply dark background 
-  else {
-    mode = "dark";
-    container.setAttribute("class", "dark");
-  }
-});
-*/
-
-
-
 
 //Make objects of each question that contains question text, array of answer choices,
 //and add associate each question with its correct answer.
 var codeQuestions = [
-    {
-        question: "JavaScript Question Placeholder",
-        choices: ["choice0", "choice1", "choice2", "choice3"],
-        correctAnswerIndex: 3
-    },
-    {
-        question: "JavaScript Question Placeholder",
-        choices: ["choice0", "choice1", "choice2", "choice3"],
-        correctAnswerIndex: 1
-    },
-    {
-        question: "JavaScript Question Placeholder",
-        choices: ["choice0", "choice1", "choice2", "choice3"],
-        correctAnswerIndex: 2
-    },
-    {
-        question: "JavaScript Question Placeholder",
-        choices: ["choice0", "choice1", "choice2", "choice3"],
-        correctAnswerIndex: 3
-    },
+  {
+      question: "JavaScript Question Placeholder",
+      choices: ["choice0", "choice1", "choice2", "choice3"],
+      correctAnswerIndex: 3
+  },
+  {
+      question: "JavaScript Question Placeholder",
+      choices: ["choice0", "choice1", "choice2", "choice3"],
+      correctAnswerIndex: 1
+  },
+  {
+      question: "JavaScript Question Placeholder",
+      choices: ["choice0", "choice1", "choice2", "choice3"],
+      correctAnswerIndex: 2
+  },
+  {
+      question: "JavaScript Question Placeholder",
+      choices: ["choice0", "choice1", "choice2", "choice3"],
+      correctAnswerIndex: 3
+  },
 ];
+
+
 
 //Event Listener using "DOMContentLoaded" to trigger showing the start-card and hiding the rest upon loading of the page
 document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("start-card").hidden = false;
-  document.getElementById("question-card").hidden = true;
-  document.getElementById("result-card").hidden = true;
-  document.getElementById("score-card").hidden = true;
-  document.getElementById("leaderboard-card").hidden = true;
-});
+  //Set up variable to keep track of the current question index
+  //and another variable to store the user's score.
+  var currentQuestionIndex = 0;
+  var userScore = 0;
+  var timer;
+  var timeRemaining = 60;
 
-//Event listenter to start the quiz when the 'Start Quiz!' button is pressed
-document.getElementById("start-btn").addEventListener("click", function() {
-  //hide start card
-  document.getElementById("start-card").hidden = true;
-  //show first question card
-  showQuestion();
-});
+  //Function to start quiz
+  function startQuiz() {
+    //hide start card
+    document.getElementById("start-card").setAttribute("hidden", "true");
+    //show question card
+    showQuestion();
+    //start timer
+    timer = setInterval(function () {
+      timeRemaining--;
+      document.getElementById("time").textContent = timeRemaining;
 
-//defining 'showQuestion' function from above
-function showQuestion() {
-  //get current question for CodeQuestions array
-  var currentQuestion = codeQuestions[currentQuestionIndex];
-  //update question and answer choices 
-  document.getElementById("question-text").textContent = currentQuestion.question;
-  for (var i = 0; i < currentQuestion.choices.length; i++) {
-    document.getElementById("choice" + i).textContent = currentQuestion.choices[i];
+      if (timeRemaining <= 0) {
+        clearInterval(timer);
+        endQuiz();
+      }
+    }, 1000);
   }
 
+  //defining 'showQuestion' function from above
+  function showQuestion() {
+    //get current question for CodeQuestions array
+    var currentQuestion = codeQuestions[currentQuestionIndex];
+   //update question and answer choices 
+    document.getElementById("question-text").textContent = currentQuestion.question;
+    var choiceButtons = document.querySelectorAll(".choice-btn");
+
+    for (var i = 0; i < currentQuestion.choices.length; i++) {
+      choiceButtons[i].textContent = currentQuestion.choices[i];
+    }
+
   //show the question card and hide others
-  document.getElementById("question-card").hidden = false;
-  document.getElementById("result-card").hidden = true;
-  document.getElementById("score-card").hidden = true;
-  document.getElementById("leaderboard-card").hidden = true;
+  document.getElementById("question-card").removeAttribute("hidden");
 }
 
+  //Function to check answers
+  function checkAnswer(event) {
+    var selectedChoice = event.target.textContent;
+    var currentQuestion = codeQuestions[currentQuestionIndex];
 
-//Set up variable to keep track of the current question index
-//and another variable to store the user's score.
-var currentQuestionIndex = 0;
-var userScore = 0;
+    if (selectedChoice === currentQuestion.choices[currentQuestion.correctAnswerIndex]) {
+      userScore++;
+      showResult("Correct!", "result-correct");
+    } else {
+      timeRemaining -= 10; //penalty wrong answer
+      showResult("Wrong!", "result-wrong");
+    }
 
-//Add a function to display the next question when the user
-//clicks the start button or answers a question.
-function displayQuestion()
+    //move to next question
+    currentQuestionIndex++;
+    if (currentQuestionIndex < codeQuestions.length) {
+      showQuestion();
+    }
+  }
 
+//display correct/wrong
+  function showResult(resultText, resultClass) {
+    var resultCard = document.getElementById("result-card");
+    resultCard.textContent = resultText;
+    resultCard.className = "card" + resultClass;
 
-//Add an event listener to the start button so that when it's clicked it 
-//triggers the display of the first question and starts the timer.
+    setTimeout(function () {
+      resultCard.textContent = "";
+      resultCard.className = "card";
+    }, 1000);
+}
+
+//function to end quiz/display final score
+function endQuiz() {
+  clearInterval(timer);
+  document.getElementById("question-card").setAttribute("hidden", "true");
+  document.getElementById("score").textContent = userScore;
+  document.getElementById("score-card").removeAttribute("hidden");
+}
+
+//function for form submittion
+function submitHighScores(event) {
+  event.preventDefault();
+  var intialsInput = document.getElementById("initials").value;
+
+  //save score and initials
+  localStorage.setItem("highScore", JSON.stringify(userScore));
+  localStorage.setItem("initials", initialsInput);
+  goToStartCard();
+}
+
+//Go back to start 
+function goToStartCard() {
+  currentQuestionIndex = 0;
+  userScore = 0;
+  timeRemaining = 60;
+  document.getElementById("score-card").setAttribute("hidden", "true")
+  document.getElementById("start-card").removeAttribute("hidden");
+}
+
+//Event listenter to start the quiz when the 'Start Quiz!' button is pressed
+document.getElementById("start-btn").addEventListener("click", startQuiz);
+
+//Event listener for user answers
+document.getElementById("answer-choices").addEventListener("click", function(event) {
+  if (event.target.matches(".choice-btn")){
+    checkAnswer(event);
+  }
+});
+
+document.getElementById("submission-form").addEventListener("submit", submitHighScores);
+});
 
 
