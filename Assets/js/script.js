@@ -86,6 +86,8 @@ document.addEventListener("DOMContentLoaded", function() {
     currentQuestionIndex++;
     if (currentQuestionIndex < codeQuestions.length) {
       showQuestion();
+    } else {
+      endQuiz();
     }
   }
 
@@ -112,22 +114,46 @@ function endQuiz() {
 //function for form submittion
 function submitHighScores(event) {
   event.preventDefault();
-  var intialsInput = document.getElementById("initials").value;
+  var highScore = [];
+  var initialsInput = document.getElementById("initials").value;
+  var highScore = JSON.parse(localStorage.getItem("highScore"));
 
-  //save score and initials
-  localStorage.setItem("highScore", JSON.stringify(userScore));
-  localStorage.setItem("initials", initialsInput);
-  goToStartCard();
+  if (!highScore || userScore > highScore.score) {
+    highScore = {score: userScore, initials: initialsInput};
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+  }
+
+  showLeaderboard();
 }
 
-//Go back to start 
-function goToStartCard() {
-  currentQuestionIndex = 0;
-  userScore = 0;
-  timeRemaining = 60;
-  document.getElementById("score-card").setAttribute("hidden", "true")
-  document.getElementById("start-card").removeAttribute("hidden");
+//Show Leaderboard
+function showLeaderboard() {
+  document.getElementById("start-card").setAttribute("hidden", "true");
+  document.getElementById("question-card").setAttribute("hidden", "true");
+  document.getElementById("result-card").setAttribute("hidden", "true");
+  document.getElementById("score-card").setAttribute("hidden", "true");
+  document.getElementById("leaderboard-card").removeAttribute("hidden");
+
+  //retrieve high score
+  var highScore = JSON.parse(localStorage.getItem("highScore")) || [];
+  //sort scores high to low
+  highScore.sort(function(a, b) {
+    return b.score - a.score;
+  });
+
+  var leaderboardList = document.getElementById("leaderboard-list");
+  leaderboardList.innerHTML = "";
+
+  //display high scores
+  for (var i = 0; i < highScore.length; i++) {
+    var listItem = document.createElement("li");
+    listItem.textContent = highScore[i].initials + " - " + highScore[i].score;
+    leaderboardList.appendChild(listItem);
+  }
 }
+
+
+
 
 //Event listenter to start the quiz when the 'Start Quiz!' button is pressed
 document.getElementById("start-btn").addEventListener("click", startQuiz);
@@ -139,7 +165,24 @@ document.getElementById("answer-choices").addEventListener("click", function(eve
   }
 });
 
+//submission form event listener
 document.getElementById("submission-form").addEventListener("submit", submitHighScores);
+});
+
+//view high scores event listener
+document.getElementById("highscore-link").addEventListener("click", showLeaderBoard);
+
+//go back button event listener
+document.getElementById("back-btn").addEventListener("click", function() {
+  document.getElementById("leaderboard-card").setAttribute("hidden", "true");
+  document.getElementById("start-card").removeAttribute("hidden");
+});
+
+//clear highscore event listener
+document.getElementById("clear-btn").addEventListener("click", function() {
+  localStorage.removeItem("highScore");
+  var leaderboardList = document.getElementById("leaderboard-list");
+  leaderboardList.innerHTML = "";
 });
 
 
