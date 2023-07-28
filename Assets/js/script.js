@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //Function to start quiz
   function startQuiz() {
+    userScore = 0;
     //hide start card
     document.getElementById("start-card").setAttribute("hidden", "true");
     //show question card
@@ -112,9 +113,8 @@ function endQuiz() {
 }
 
 //function for form submittion
-function submitHighScores(event) {
+function submitHighScores(event, userScore) {
   event.preventDefault();
-  var highScore = [];
   var initialsInput = document.getElementById("initials").value;
   var highScore = JSON.parse(localStorage.getItem("highScore"));
 
@@ -169,8 +169,10 @@ document.getElementById("answer-choices").addEventListener("click", function(eve
 document.getElementById("submission-form").addEventListener("submit", submitHighScores);
 });
 
+
 //view high scores event listener
-document.getElementById("highscore-link").addEventListener("click", showLeaderBoard);
+document.getElementById("highscore-link").addEventListener("click", showLeaderboard);
+
 
 //go back button event listener
 document.getElementById("back-btn").addEventListener("click", function() {
