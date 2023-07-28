@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //Function to check answers
   function checkAnswer(event) {
+    event.stopPropagation();
     var selectedChoice = event.target.textContent;
     var currentQuestion = codeQuestions[currentQuestionIndex];
 
@@ -113,7 +114,7 @@ function endQuiz() {
 }
 
 //function for form submittion
-function submitHighScores(event, userScore) {
+function submitHighScores(event) {
   event.preventDefault();
   var initialsInput = document.getElementById("initials").value;
   var highScore = JSON.parse(localStorage.getItem("highScore"));
@@ -164,6 +165,11 @@ document.getElementById("answer-choices").addEventListener("click", function(eve
     checkAnswer(event);
   }
 });
+
+var choiceButtons = document.querySelectorAll(".choice-btn");
+for (var i=0; i < choiceButtons.length; i++) {
+  choiceButtons[i].addEventListener("click", checkAnswer);
+}
 
 //submission form event listener
 document.getElementById("submission-form").addEventListener("submit", submitHighScores);
