@@ -31,10 +31,10 @@
         <section id="question-card" class="card" hidden="true">
             <h2 id="question-text">The condition in an if/else statement is enclosed within ______.</h2>
             <div id="answer-choices">
-                <button id="choice0" class="btn choice-btn">1. quotes</button>
-                <button id="choice1" class="btn choice-btn">2. curly brackets</button>
-                <button id="choice2" class="btn choice-btn">3. parentheses</button>
-                <button id="choice3" class="btn choice-btn">4. square brackets</button>
+                <button class="btn choice-btn" data-choice="0"></button>
+                <button class="btn choice-btn" datachoice="1"></button>
+                <button class="btn choice-btn" data-choice="2"></button>
+                <button class="btn choice-btn" data-choice="3"></button>
             </div>    
         </section>
 
@@ -50,13 +50,14 @@
                 Your final is 
                 <span id="score">0</span>.
             </p>
-            
+            <form id="submission-form" class="inline-form"></form>
                 <label for="initials">Enter initials: </label>
                 <input type="text" id="initials">
                 <button id="submit-btn" class="btn">Submit</button>
+            </form>
         </section>
 
-        <form id="submission-form" class="inline-form"></form>
+        
 
         <!--Shows leaderboard with list of highscores-->
         <section id="leaderboard-card" class="card" hidden="true">

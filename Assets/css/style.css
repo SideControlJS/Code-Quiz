@@ -55,6 +55,20 @@ main {
     background-color: #844c86;
 }
 
+.inline-form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.inline-form label {
+    margin-right: 5px;
+}
+
+.inline-form input {
+    padding: 5px;
+}
+
 #start-btn {
     padding: 10px;
 }
@@ -67,4 +81,20 @@ main {
 .result-wrong {
     color: red;
     font-weight: bold;
+}
+
+#score-card {
+    text-align: center;
+}
+
+#leaderboard-card {
+    padding-left: 20px;
+}
+
+#leaderboard-card ol {
+    padding-left: 20px;
+}
+
+#leaderboard-card li {
+    margin: 5px 0;
 }

@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
       timeRemaining--;
       document.getElementById("time").textContent = timeRemaining;
 
-      if (timeRemaining <= 0 || currentQuestionIndex >= codeQuestions.length) {
+      if (timeRemaining <= 0 || currentQuestionIndex >= codeQuestions.length -1) {
         clearInterval(timer);
         endQuiz();
       }
@@ -97,10 +97,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //move to next question
    currentQuestionIndex++;
-    if (currentQuestionIndex < codeQuestions.length) {
-      showQuestion();
-    } else {
-      endQuiz();
+
+
+    if (currentQuestionIndex >= codeQuestions.length) {
+      clearInterval(timer);
+      endQuiz;
     }
   }
 
@@ -119,14 +120,8 @@ function showResult(resultText, resultClass) {
   setTimeout(function () {
     resultCard.classList.remove(resultClass);
     resultCard.setAttribute("hidden", "true");
-
-    currentQuestionIndex++;
-    if (currentQuestionIndex < codeQuestions.length) {
-      showQuestion();
-    } else {
-      endQuiz();
-    }
-  }, 1000);
+    showQuestion();
+    }, 1000);
 }
 
 //function to end quiz/display final score
