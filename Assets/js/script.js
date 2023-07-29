@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //Function to start quiz
   function startQuiz() {
+    console.log("start quiz called");
     userScore = 0;
     //hide start card
     document.getElementById("start-card").setAttribute("hidden", "true");
@@ -68,76 +69,67 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //show the question card and hide others
   document.getElementById("question-card").removeAttribute("hidden");
-  document.getElementById("score").textContent = userScore;
+  document.getElementById("result-card").setAttribute("hidden", "true");
 }
 
   //Function to check answers
   function checkAnswer(event) {
+    console.log("checkAnswer called");
     event.stopPropagation();
     var selectedChoice = event.target.id;
+    console.log("Selected choice:", selectedChoice);
     var currentQuestion = codeQuestions[currentQuestionIndex];
 
     if (selectedChoice === currentQuestion.choices[currentQuestion.correctAnswerIndex]) {
+      console.log("Correct answer selected");
       userScore++;
       showResult("Correct!", "result-correct");
     } else {
+      console.log("Wrong answer selected");
       timeRemaining -= 10; //penalty wrong answer
       showResult("Wrong!", "result-wrong");
     }
-
+/*
     //move to next question
     currentQuestionIndex++;
     if (currentQuestionIndex < codeQuestions.length) {
       showQuestion();
     } else {
       endQuiz();
-    }
+    }*/
   }
 
 //display correct/wrong
-  function showResult(resultText, resultClass) {
-    console.log("showResult called");
-    console.log("Result text:", resultText);
-    console.log("Result class:", resultClass);
+function showResult(resultText, resultClass) {
+  console.log("showResult called");
+  console.log("Result text:", resultText);
+  console.log("Result class:", resultClass);
 
+  var resultCard = document.getElementById("result-card");
+  var resultTextElement = document.getElementById("result-text");
+  resultTextElement.textContent = resultText; 
 
-    var resultCard = document.getElementById("result-card");
-    var resultElement = document.createElement("p");
-    resultElement.textContent = resultText;
-    resultElement.className = resultClass;
-    
-    resultCard.appendChild(resultElement);
+  resultCard.classList.add(resultClass);
 
-
-    setTimeout(function () {
-      resultCard.removeChild(resultElement);
-    }, 1000);
+  setTimeout(function () {
+    resultCard.classList.remove(resultClass);
+    resultCard.setAttribute("hidden", "true");
+  }, 1000);
 }
 
 //function to end quiz/display final score
 function endQuiz() {
+  console.log("end quiz called");
   clearInterval(timer);
   document.getElementById("question-card").setAttribute("hidden", "true");
   document.getElementById("score").textContent = userScore;
   document.getElementById("score-card").removeAttribute("hidden");
 }
 
-//function for form submittion
-function submitHighScores(event) {
-  event.preventDefault();
-  var initialsInput = document.getElementById("initials").value;
-  var highScore = JSON.parse(localStorage.getItem("highScore"));
-
-  if (!highScore || userScore > highScore.score) {
-    highScore = {score: userScore, initials: initialsInput};
-    localStorage.setItem("highScore", JSON.stringify(highScore));
-  }
-
-  showLeaderboard();
-}
-
 //Show Leaderboard
 function showLeaderboard() {
+  console.log("showLeaderboard called");
+
   document.getElementById("start-card").setAttribute("hidden", "true");
   document.getElementById("question-card").setAttribute("hidden", "true");
   document.getElementById("result-card").setAttribute("hidden", "true");
@@ -161,6 +153,22 @@ function showLeaderboard() {
     leaderboardList.appendChild(listItem);
   }
 }
+
+//function for form submittion
+function submitHighScores(event) {
+  event.preventDefault();
+  var initialsInput = document.getElementById("initials").value;
+  var highScore = JSON.parse(localStorage.getItem("highScore"));
+
+  if (!highScore || userScore > highScore.score) {
+    highScore = {score: userScore, initials: initialsInput};
+    localStorage.setItem("highScore", JSON.stringify(highScore));
+  }
+
+  showLeaderboard();
+}
+
+
 
 
 
