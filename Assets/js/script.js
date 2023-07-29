@@ -3,23 +3,23 @@
 //and add associate each question with its correct answer.
 var codeQuestions = [
   {
-      question: "JavaScript Question Placeholder",
-      choices: ["choice0", "choice1", "choice2", "choice3"],
-      correctAnswerIndex: 3
-  },
-  {
-      question: "JavaScript Question Placeholder",
-      choices: ["choice0", "choice1", "choice2", "choice3"],
-      correctAnswerIndex: 1
-  },
-  {
-      question: "JavaScript Question Placeholder",
-      choices: ["choice0", "choice1", "choice2", "choice3"],
+      question: "The condition in an if/else statement is enclosed within __________.",
+      choices: ["1. quotes", "2. curly brackets", "3. parentheses", "4. square brackets"],
       correctAnswerIndex: 2
   },
   {
-      question: "JavaScript Question Placeholder",
-      choices: ["choice0", "choice1", "choice2", "choice3"],
+      question: "Arrays in JavaScript can be used to store __________.",
+      choices: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
+      correctAnswerIndex: 3
+  },
+  {
+      question: "String values must be enclosed within __________ when being assigned to variables.",
+      choices: ["1. commas", "2. curly brackets", "3. quotes", "4. parentheses"],
+      correctAnswerIndex: 2
+  },
+  {
+      question: "A very useful tool used during development and debugging for printing content to the debugger is: __________",
+      choices: ["1. return", "2. terminal/bash", "3. for loops", "4. console.log"],
       correctAnswerIndex: 3
   },
 ];
@@ -68,12 +68,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //show the question card and hide others
   document.getElementById("question-card").removeAttribute("hidden");
+  document.getElementById("score").textContent = userScore;
 }
 
   //Function to check answers
   function checkAnswer(event) {
     event.stopPropagation();
-    var selectedChoice = event.target.textContent;
+    var selectedChoice = event.target.id;
     var currentQuestion = codeQuestions[currentQuestionIndex];
 
     if (selectedChoice === currentQuestion.choices[currentQuestion.correctAnswerIndex]) {
@@ -95,13 +96,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //display correct/wrong
   function showResult(resultText, resultClass) {
+    console.log("showResult called");
+    console.log("Result text:", resultText);
+    console.log("Result class:", resultClass);
+
+
     var resultCard = document.getElementById("result-card");
-    resultCard.textContent = resultText;
-    resultCard.className = "card" + resultClass;
+    var resultElement = document.createElement("p");
+    resultElement.textContent = resultText;
+    resultElement.className = resultClass;
+    
+    resultCard.appendChild(resultElement);
+
 
     setTimeout(function () {
-      resultCard.textContent = "";
-      resultCard.className = "card";
+      resultCard.removeChild(resultElement);
     }, 1000);
 }
 
