@@ -35,6 +35,28 @@ document.addEventListener("DOMContentLoaded", function() {
   var timer;
   var timeRemaining = 60;
 
+
+    //defining 'showQuestion' function 
+    function showQuestion() {
+      //get current question for CodeQuestions array
+      var currentQuestion = codeQuestions[currentQuestionIndex];
+     //update question and answer choices 
+      document.getElementById("question-text").textContent = currentQuestion.question;
+      var choiceButtons = document.querySelectorAll(".choice-btn");
+  
+      for (var i = 0; i < currentQuestion.choices.length; i++) {
+        choiceButtons[i].textContent = currentQuestion.choices[i];
+      }
+  
+    //show the question card and hide others
+    document.getElementById("question-card").removeAttribute("hidden");
+    document.getElementById("result-card").setAttribute("hidden", "true");
+
+    for (var i=0; i < choiceButtons.length; i++) {
+      choiceButtons[i].addEventListener("click", checkAnswer);
+    }
+  }
+
   //Function to start quiz
   function startQuiz() {
     console.log("start quiz called");
@@ -48,29 +70,12 @@ document.addEventListener("DOMContentLoaded", function() {
       timeRemaining--;
       document.getElementById("time").textContent = timeRemaining;
 
-      if (timeRemaining <= 0) {
+      if (timeRemaining <= 0 || currentQuestionIndex >= codeQuestions.length) {
         clearInterval(timer);
         endQuiz();
       }
     }, 1000);
   }
-
-  //defining 'showQuestion' function from above
-  function showQuestion() {
-    //get current question for CodeQuestions array
-    var currentQuestion = codeQuestions[currentQuestionIndex];
-   //update question and answer choices 
-    document.getElementById("question-text").textContent = currentQuestion.question;
-    var choiceButtons = document.querySelectorAll(".choice-btn");
-
-    for (var i = 0; i < currentQuestion.choices.length; i++) {
-      choiceButtons[i].textContent = currentQuestion.choices[i];
-    }
-
-  //show the question card and hide others
-  document.getElementById("question-card").removeAttribute("hidden");
-  document.getElementById("result-card").setAttribute("hidden", "true");
-}
 
   //Function to check answers
   function checkAnswer(event) {
@@ -80,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Selected choice:", selectedChoice);
     var currentQuestion = codeQuestions[currentQuestionIndex];
 
-    if (selectedChoice === currentQuestion.choices[currentQuestion.correctAnswerIndex]) {
+    if (selectedChoice === "choice" + currentQuestion.correctAnswerIndex) {
       console.log("Correct answer selected");
       userScore++;
       showResult("Correct!", "result-correct");
@@ -89,14 +94,14 @@ document.addEventListener("DOMContentLoaded", function() {
       timeRemaining -= 10; //penalty wrong answer
       showResult("Wrong!", "result-wrong");
     }
-/*
+
     //move to next question
-    currentQuestionIndex++;
+   currentQuestionIndex++;
     if (currentQuestionIndex < codeQuestions.length) {
       showQuestion();
     } else {
       endQuiz();
-    }*/
+    }
   }
 
 //display correct/wrong
@@ -114,6 +119,13 @@ function showResult(resultText, resultClass) {
   setTimeout(function () {
     resultCard.classList.remove(resultClass);
     resultCard.setAttribute("hidden", "true");
+
+    currentQuestionIndex++;
+    if (currentQuestionIndex < codeQuestions.length) {
+      showQuestion();
+    } else {
+      endQuiz();
+    }
   }, 1000);
 }
 
@@ -177,11 +189,11 @@ function submitHighScores(event) {
 document.getElementById("start-btn").addEventListener("click", startQuiz);
 
 //Event listener for user answers
-document.getElementById("answer-choices").addEventListener("click", function(event) {
+/*document.getElementById("answer-choices").addEventListener("click", function(event) {
   if (event.target.matches(".choice-btn")){
     checkAnswer(event);
   }
-});
+});*/
 
 var choiceButtons = document.querySelectorAll(".choice-btn");
 for (var i=0; i < choiceButtons.length; i++) {
