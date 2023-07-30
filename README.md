@@ -6,19 +6,19 @@ This project is to build a coding quiz. This project was challenging. The deploy
 
 ## Link to Deployed Page
 
-
+https://sidecontroljs.github.io/Code-Quiz/
 
 ## Screenshots of Deployed Webpage
 
 
-![DeployedSiteScreenShot](Assets/Images/deployed_ss.png)
+![DeployedSiteScreenShot](/Assets/Images/deployed_ss.png)
 
 
 
 ## Local Repo Screenshot
 
 
-![LocalRepoScreenShot](Assets/Images/repo_ss.png)
+![LocalRepoScreenShot](/Assets/Images/local_repo_ss.png)
 
 
 ## Credits
