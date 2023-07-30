@@ -1,21 +1,30 @@
 
-//Make objects of each question that contains question text, array of answer choices,
-//and add associate each question with its correct answer.
+/*Make objects of each question that contains question text, array of answer choices,
+and add associate each question with its correct answer.*/
 var codeQuestions = [
   {
       question: "1. The condition in an if/else statement is enclosed within __________.",
       choices: ["1. quotes", "2. curly brackets", "3. parentheses", "4. square brackets"],
-      correctAnswerIndex: 2
+      correctAnswerIndex: 2,
+      feedback: {
+        correct: "Correct!",
+        wrong: "Wrong!",
+      },
   },
   {
       question: "2. Arrays in JavaScript can be used to store __________.",
       choices: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
-      correctAnswerIndex: 3
+      correctAnswerIndex: 3,
+      feedback: {
+        correct: "Correct!",
+        wrong: "Wrong!",
+      },      
   },
   {
       question: "3. String values must be enclosed within __________ when being assigned to variables.",
       choices: ["1. commas", "2. curly brackets", "3. quotes", "4. parentheses"],
-      correctAnswerIndex: 2
+      correctAnswerIndex: 2,
+
   },
   {
       question: "4. A very useful tool used during development and debugging for printing content to the debugger is: __________",
@@ -34,28 +43,33 @@ var codeQuestions = [
 
 
 
-    //defining 'showQuestion' function 
-    function showQuestion() {
-      //get current question for CodeQuestions array
-      var currentQuestion = codeQuestions[currentQuestionIndex];
-     //update question and answer choices 
-      document.getElementById("question").textContent = currentQuestion.question;
-      var choiceButtons = document.querySelectorAll(".choice-btn");
-  
-      for (var i = 0; i < currentQuestion.choices.length; i++) {
-        choiceButtons[i].textContent = currentQuestion.choices[i];
-        choiceButtons[i].setAttribute("data-choice", i);
-        choiceButtons[i].addEventListener("click", checkAnswer);
-      }
-  
-    //show the question card and hide others
-    document.getElementById("question-card").removeAttribute("hidden");
-    document.getElementById("result-card").setAttribute("hidden", "true");
+// Defining 'showQuestion' function
+function showQuestion() {
+  // Get current question for CodeQuestions array
+  var currentQuestion = codeQuestions[currentQuestionIndex];
 
-    for (var i=0; i < choiceButtons.length; i++) {
-      choiceButtons[i].addEventListener("click", checkAnswer);
-    }
+  // Clear the previous question
+  document.getElementById("question").textContent = "";
+
+  // Update question and answer choices
+  document.getElementById("question-text").textContent = currentQuestion.question;
+  var choiceButtons = document.querySelectorAll(".choice-btn");
+
+  for (var i = 0; i < currentQuestion.choices.length; i++) {
+    choiceButtons[i].textContent = currentQuestion.choices[i];
+    choiceButtons[i].setAttribute("data-choice", i);
   }
+
+  // Show the question card and hide others
+  document.getElementById("question-card").removeAttribute("hidden");
+  document.getElementById("all-done-card").setAttribute("hidden", "true");
+  document.getElementById("result-card").setAttribute("hidden", "true");
+
+  // Add event listeners to answer choice buttons
+  for (var i = 0; i < choiceButtons.length; i++) {
+    choiceButtons[i].addEventListener("click", checkAnswer);
+  }
+}
 
   //Function to start quiz
   function startQuiz() {
@@ -132,8 +146,9 @@ function endQuiz() {
   console.log("end quiz called");
   clearInterval(timer);
   document.getElementById("question-card").setAttribute("hidden", "true");
+  document.getElementById("all-done-card").removeAttribute("hidden");
   document.getElementById("score").textContent = userScore;
-  document.getElementById("score-card").removeAttribute("hidden");
+  document.getElementById("score-card").setAttribute("hidden", "true");
 }
 
 //Show Leaderboard
