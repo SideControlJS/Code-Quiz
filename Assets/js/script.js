@@ -3,37 +3,35 @@
 //and add associate each question with its correct answer.
 var codeQuestions = [
   {
-      question: "The condition in an if/else statement is enclosed within __________.",
+      question: "1. The condition in an if/else statement is enclosed within __________.",
       choices: ["1. quotes", "2. curly brackets", "3. parentheses", "4. square brackets"],
       correctAnswerIndex: 2
   },
   {
-      question: "Arrays in JavaScript can be used to store __________.",
+      question: "2. Arrays in JavaScript can be used to store __________.",
       choices: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
       correctAnswerIndex: 3
   },
   {
-      question: "String values must be enclosed within __________ when being assigned to variables.",
+      question: "3. String values must be enclosed within __________ when being assigned to variables.",
       choices: ["1. commas", "2. curly brackets", "3. quotes", "4. parentheses"],
       correctAnswerIndex: 2
   },
   {
-      question: "A very useful tool used during development and debugging for printing content to the debugger is: __________",
+      question: "4. A very useful tool used during development and debugging for printing content to the debugger is: __________",
       choices: ["1. return", "2. terminal/bash", "3. for loops", "4. console.log"],
       correctAnswerIndex: 3
   },
 ];
 
-
-
-//Event Listener using "DOMContentLoaded" to trigger showing the start-card and hiding the rest upon loading of the page
-document.addEventListener("DOMContentLoaded", function() {
   //Set up variable to keep track of the current question index
   //and another variable to store the user's score.
   var currentQuestionIndex = 0;
   var userScore = 0;
   var timer;
   var timeRemaining = 60;
+  var pointsPerCorrectAnswer = 5;
+
 
 
     //defining 'showQuestion' function 
@@ -41,11 +39,13 @@ document.addEventListener("DOMContentLoaded", function() {
       //get current question for CodeQuestions array
       var currentQuestion = codeQuestions[currentQuestionIndex];
      //update question and answer choices 
-      document.getElementById("question-text").textContent = currentQuestion.question;
+      document.getElementById("question").textContent = currentQuestion.question;
       var choiceButtons = document.querySelectorAll(".choice-btn");
   
       for (var i = 0; i < currentQuestion.choices.length; i++) {
         choiceButtons[i].textContent = currentQuestion.choices[i];
+        choiceButtons[i].setAttribute("data-choice", i);
+        choiceButtons[i].addEventListener("click", checkAnswer);
       }
   
     //show the question card and hide others
@@ -77,33 +77,34 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 1000);
   }
 
-  //Function to check answers
-  function checkAnswer(event) {
-    console.log("checkAnswer called");
-    event.stopPropagation();
-    var selectedChoice = event.target.id;
-    console.log("Selected choice:", selectedChoice);
-    var currentQuestion = codeQuestions[currentQuestionIndex];
+// Function to check answers
+function checkAnswer(event) {
+  console.log("checkAnswer called");
+  event.stopPropagation();
+  var selectedChoiceIndex = parseInt(event.target.getAttribute("data-choice"));
+  console.log("Selected choice index:", selectedChoiceIndex);
+  var currentQuestion = codeQuestions[currentQuestionIndex];
 
-    if (selectedChoice === "choice" + currentQuestion.correctAnswerIndex) {
-      console.log("Correct answer selected");
-      userScore++;
-      showResult("Correct!", "result-correct");
-    } else {
-      console.log("Wrong answer selected");
-      timeRemaining -= 10; //penalty wrong answer
-      showResult("Wrong!", "result-wrong");
-    }
-
-    //move to next question
-   currentQuestionIndex++;
-
-
-    if (currentQuestionIndex >= codeQuestions.length) {
-      clearInterval(timer);
-      endQuiz;
-    }
+  if (selectedChoiceIndex === currentQuestion.correctAnswerIndex) {
+    console.log("Correct answer selected");
+    userScore++;
+    showResult("Correct!", "result-correct");
+  } else {
+    console.log("Wrong answer selected");
+    timeRemaining -= 10; // Penalty for wrong answer
+    showResult("Wrong!", "result-wrong");
   }
+
+  // Move to the next question
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex >= codeQuestions.length) {
+    clearInterval(timer);
+    endQuiz();
+  } else {
+    showQuestion(); // Display the next question
+  }
+}
 
 //display correct/wrong
 function showResult(resultText, resultClass) {
@@ -116,13 +117,15 @@ function showResult(resultText, resultClass) {
   resultTextElement.textContent = resultText; 
 
   resultCard.classList.add(resultClass);
+  resultCard.removeAttribute("hidden"); // Show the result card
 
   setTimeout(function () {
     resultCard.classList.remove(resultClass);
-    resultCard.setAttribute("hidden", "true");
+    resultCard.setAttribute("hidden", "true"); // Hide the result card
     showQuestion();
-    }, 1000);
+  }, 1000);
 }
+
 
 //function to end quiz/display final score
 function endQuiz() {
@@ -175,29 +178,22 @@ function submitHighScores(event) {
   showLeaderboard();
 }
 
-
-
-
-
+//Event Listener using "DOMContentLoaded" to trigger showing the start-card and hiding the rest upon loading of the page
+document.addEventListener("DOMContentLoaded", function() {
+});
 
 //Event listenter to start the quiz when the 'Start Quiz!' button is pressed
 document.getElementById("start-btn").addEventListener("click", startQuiz);
 
 //Event listener for user answers
-/*document.getElementById("answer-choices").addEventListener("click", function(event) {
-  if (event.target.matches(".choice-btn")){
-    checkAnswer(event);
-  }
-});*/
-
 var choiceButtons = document.querySelectorAll(".choice-btn");
-for (var i=0; i < choiceButtons.length; i++) {
+for (var i = 0; i < choiceButtons.length; i++) {
   choiceButtons[i].addEventListener("click", checkAnswer);
-}
+};
 
 //submission form event listener
 document.getElementById("submission-form").addEventListener("submit", submitHighScores);
-});
+
 
 
 //view high scores event listener

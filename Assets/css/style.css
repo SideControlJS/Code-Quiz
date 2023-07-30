@@ -73,13 +73,7 @@ main {
     padding: 10px;
 }
 
-.result-correct {
-    color: green;
-    font-weight: bold;
-}
-
-.result-wrong {
-    color: red;
+#result-text {
     font-weight: bold;
 }
 
